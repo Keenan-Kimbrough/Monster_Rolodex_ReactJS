@@ -13,6 +13,14 @@ super()
   console.log('constructor')
   }
 
+onSearchChange = (event)=> { 
+  const searchField = event.target.value.toLocaleLowerCase();
+  
+  this.setState ( () => {
+    return { searchField}
+  })
+}
+
 
 // API call
   componentDidMount() {
@@ -26,23 +34,22 @@ console.log('componentDidMount')
   }
   render () {
 console.log('render')
+const {monsters, searchField} = this.state;
+const {onSearchChange} = this;
 
-const filteredMonsters = this.state.monsters.filter((monster)=> {
-  return monster.name.toLocaleLowerCase().includes(this.state.searchField)
+
+const filteredMonsters = monsters.filter((monster)=> {
+  return monster.name.toLocaleLowerCase().includes(searchField)
 
 })
     return (
 
       <div> 
-  <input className = 'searchbox' type='search' placeholder= 'search monsters'
-  onChange = { (event)=> {
-    const searchField = event.target.value.toLocaleLowerCase();
-    
-    this.setState ( () => {
-      return { searchField}
-    })
-
-  }}/>
+  <input
+  className = 'searchbox' 
+  type='search' 
+  placeholder='search monsters' 
+  onChange={onSearchChange}/>
 
 
  {filteredMonsters.map((monster) => {
